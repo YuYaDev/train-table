@@ -1,25 +1,55 @@
-import React from 'react';
-import logo from '../../logo.svg';
-import styles from './app.module.css';
+import React, {useState, useEffect, useMemo} from 'react';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
+import {Table} from "../table/table";
+import {IColumnType} from "../table/table";
+import {IResponseData, ITrainData} from "../../utils/types";
+import {AppDispatch, RootState, useAppDispatch} from "../../index";
+import {GET_TRAIN_DATA, getData} from "../../services/actions";
+import {IAction, IStoreState} from "../../services/reducers";
+import {ThunkDispatch} from "redux-thunk";
+
+
 
 function App() {
-  return (
-    <div className={styles.App}>
-      <header className={styles.AppHeader}>
-        <img src={logo} className={styles.AppLogo} alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-            className={styles.AppLink}
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+  const [trainData, setTrainData] = useState<ITrainData[]>([]);
+
+    const { dataRequest, dataRequestFailed, data }  = useSelector((store : RootState) => store.trains)
+
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        (dispatch as ThunkDispatch<IStoreState, unknown, IAction>)(getData());
+    }, []);
+
+     useMemo(() => {
+      let result = data.reduce((acc, train_item) => {
+        acc.push({name: train_item.name, description: train_item.description})
+        return acc;
+      }, [] as ITrainData[]);
+      setTrainData(result);
+    }, [data]);
+
+    console.log(trainData);
+
+  const columns: IColumnType<ITrainData>[] = [
+      {
+        key: "name",
+        title: "Название",
+        width: 200,
+      },
+        {
+          key: "description",
+          title: "Описание",
+          width: 200,
+        }]
+
+  return(
+    <>
+        { dataRequestFailed && <p>Ошибка загрузки данных</p> }
+        { dataRequest && <p>Загрузка данных...</p>}
+      { !dataRequest && trainData.length === 20  && <Table data={trainData} columns={columns} />}
+    </>
   );
 }
 

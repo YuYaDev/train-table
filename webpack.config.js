@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -25,7 +26,14 @@ module.exports = {
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
-                use: ["babel-loader"],
+                use: [
+                    {
+                        loader: "babel-loader",
+                        options: {
+                            'plugins': ['lodash'],
+                        }
+                    }
+                ]
             },
             {
                 test: /\.(ts|tsx)$/,
@@ -61,6 +69,12 @@ module.exports = {
             template: './src/index.html',
             favicon: './src/favicon.ico',
 
+        }),
+        new LodashModuleReplacementPlugin({
+            collections: true,
+            paths: true,
+            caching: true,
+            flattening: true,
         }),
     ]
 
