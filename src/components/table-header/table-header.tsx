@@ -3,9 +3,10 @@ import styles from './table-header.module.css'
 
 interface Props<T> {
     columns: IColumnType<T>[];
+    tableType: string;
 }
 
-export function TableHeader<T>({ columns }: Props<T>): JSX.Element {
+export function TableHeader<T>({ columns, tableType }: Props<T>): JSX.Element {
     return (
         <tr>
             {columns.map((column, columnIndex) => (

@@ -13,16 +13,17 @@ export interface IColumnType<T> {
 interface Props<T> {
     data: T[];
     columns: IColumnType<T>[];
+    tableType: string;
 }
 
-export function Table<T>({ data, columns }: Props<T>): JSX.Element {
+export function Table<T>({ data, columns, tableType }: Props<T>): JSX.Element {
     return (
-        <table className={styles.tableContainer}>
+        <table className={styles.tableContainer} >
             <thead>
-            <TableHeader columns={columns} />
+            <TableHeader columns={columns} tableType={tableType} />
             </thead>
             <tbody>
-            <TableRow data={data} columns={columns} />
+            <TableRow data={data} columns={columns} tableType={tableType}/>
             </tbody>
         </table>
     );
