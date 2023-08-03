@@ -1,12 +1,11 @@
 import { combineReducers } from 'redux';
-import {IIndexedData, IIndexedTrainCharacteristics, IResponseData, ITrainCharacteristics} from "../../utils/types";
+import {IIndexedData, IIndexedTrainCharacteristics, ITrainCharacteristics} from "../../utils/types";
 import {
-    END_EDIT_FORM_VALUE,
     GET_TRAIN_DATA,
     GET_TRAIN_DATA_FAILED,
-    GET_TRAIN_DATA_SUCCESS,
+    GET_TRAIN_DATA_SUCCESS, SET_BUTTON_ACTIVE, SET_BUTTON_INACTIVE,
     SET_CURRENT_TRAIN, SET_CURRENT_TRAIN_CHARACTERISTIC, SET_CURRENT_TRAIN_NAME,
-    SET_DETAILS_TABLE_VISIBLE, START_EDIT_FORM_VALUE
+    SET_DETAILS_TABLE_VISIBLE,
 } from "../actions";
 import {FORM_SET_VALUE} from "../actions/input";
 
@@ -29,7 +28,7 @@ export interface IStoreState {
     currentTrainCharacteristics:  IIndexedTrainCharacteristics[],
     currentTrainName: string,
     characteristicsVisible: boolean,
-    editFrom: boolean,
+    buttonActive: boolean
 }
 
 // Исходное состояние
@@ -40,7 +39,7 @@ const initialTrainDataState : IStoreState = {
     currentTrainCharacteristics: [],
     currentTrainName: 'none',
     characteristicsVisible: false,
-    editFrom: false,
+    buttonActive: true
 };
 
 const trainDataReducer = (state = initialTrainDataState, action: IAction) : IStoreState => {
@@ -86,7 +85,7 @@ const trainDataReducer = (state = initialTrainDataState, action: IAction) : ISto
                         return item
                     }
                     const name = action.field  as keyof ITrainCharacteristics;
-                    if (action.value)
+                    if (action.value != null)
                         item[name] = action.value;
                     return item;
                 })
@@ -98,20 +97,7 @@ const trainDataReducer = (state = initialTrainDataState, action: IAction) : ISto
                 characteristicsVisible: true,
             };
         }
-        case START_EDIT_FORM_VALUE: {
-            return {
-                ...state,
-                editFrom: true,
-            };
-        }
-        case END_EDIT_FORM_VALUE: {
-            return {
-                ...state,
-                editFrom: false,
-            };
-        }
         case FORM_SET_VALUE: {
-
             // глубокая модификация по индексу основной таблицы
             if (action.item_idx != null && action.global_idx != null && action.field != null) {
                 const arr = state.data.map((train, index) => {
@@ -125,7 +111,7 @@ const trainDataReducer = (state = initialTrainDataState, action: IAction) : ISto
                         }
                         const name = action.field  as keyof ITrainCharacteristics;
 
-                        if (action.value)
+                        if (action.value != null)
                             item[name] = action.value;
 
                         return item;
@@ -139,6 +125,18 @@ const trainDataReducer = (state = initialTrainDataState, action: IAction) : ISto
             } else {
                 return state;
             }
+        }
+        case SET_BUTTON_ACTIVE: {
+            return {
+                ...state,
+                buttonActive: true,
+            };
+        }
+        case SET_BUTTON_INACTIVE: {
+            return {
+                ...state,
+                buttonActive: false,
+            };
         }
         default: {
             return state;

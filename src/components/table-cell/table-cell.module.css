@@ -7,3 +7,24 @@
     border-bottom-width: thin;
     border-bottom-color: #f1f1f1;
 }
+
+.errorText {
+    color: red;
+    margin: 0;
+}
+
+.inputText {
+    border: 1px solid green;
+    border-radius: 4px;
+    padding: 3px;
+}
+
+.inputTextInvalid {
+    border: 1px solid red;
+    border-radius: 4px;
+    padding: 3px;
+}
+
+*:focus {
+    outline: none;
+}

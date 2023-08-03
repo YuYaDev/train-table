@@ -1,0 +1,36 @@
+.button {
+    transition-duration: 0.4s;
+    background-color: white;
+    color: black;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border: 2px solid #555555;
+    border-radius: 3px;
+    max-width: 250px;
+    align-self: center;
+    margin: 40px;
+}
+
+.button:hover {
+    background-color: #555555;
+    color: white;
+    cursor: pointer;
+}
+
+.buttonInactive {
+    border: 2px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 3px;
+    max-width: 250px;
+    align-self: center;
+    margin: 40px;
+}

@@ -1,6 +1,4 @@
 import { IResponseData } from "../../utils/types";
-import {AnyAction, Dispatch} from 'redux';
-import {AppDispatch, useAppDispatch} from "../../index";
 import {IAction, IStoreState} from "../reducers";
 import {ThunkAction} from "redux-thunk";
 
@@ -13,6 +11,8 @@ export const SET_CURRENT_TRAIN_CHARACTERISTIC = 'SET_CURRENT_TRAIN_CHARACTERISTI
 export const SET_DETAILS_TABLE_VISIBLE = 'SET_DETAILS_TABLE_VISIBLE';
 export const START_EDIT_FORM_VALUE = 'START_EDIT_FORM_VALUE';
 export const END_EDIT_FORM_VALUE = 'END_EDIT_FORM_VALUE';
+export const SET_BUTTON_ACTIVE = 'SET_BUTTON_ACTIVE';
+export const SET_BUTTON_INACTIVE = 'SET_BUTTON_INACTIVE'
 
 const PATH = "https://gist.githubusercontent.com/orlov-oleg-developer/49f08290d1c59a6851e0a0581900e2a7/raw/e5daf87338f3c75165f8edf4c76cc7ec9c2b4aa9/gistfile1.json";
 
@@ -41,7 +41,7 @@ export function getData() : ThunkAction<void, IStoreState, unknown, IAction> {
                     data: indexedData,
                 });
             })
-            .catch((err) => {
+            .catch(() => {
                 dispatch({
                     type: GET_TRAIN_DATA_FAILED,
                 });
