@@ -1,15 +1,15 @@
 import styles from './table-row.module.css'
 
 import { IColumnType } from '../table/table';
-import {TableCell} from "../table-cell/table-cell";
-import {SET_CURRENT_TRAIN, SET_CURRENT_TRAIN_NAME, SET_DETAILS_TABLE_VISIBLE} from "../../services/actions";
-import {useAppDispatch} from "../../index";
-import {IIndexedData, IIndexedTrainCharacteristics, IResponseData} from "../../utils/types";
+import { TableCell} from "../table-cell/table-cell";
+import { SET_CURRENT_TRAIN, SET_CURRENT_TRAIN_NAME, SET_DETAILS_TABLE_VISIBLE } from "../../services/actions";
+import { useAppDispatch } from "../../index";
+import { IIndexedData } from "../../utils/types";
 
 
 interface Props<T> {
     data: T[] ;
-    columns: IColumnType<T>[];
+    columns: IColumnType[];
     tableType: string;
 }
 

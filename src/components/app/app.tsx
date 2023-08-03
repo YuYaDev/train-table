@@ -2,7 +2,6 @@ import React, {useEffect, } from 'react';
 import {  useSelector } from 'react-redux'
 import {Table} from "../table/table";
 import {IColumnType} from "../table/table";
-import {IResponseData, ITrainCharacteristics} from "../../utils/types";
 import { RootState, useAppDispatch} from "../../index";
 import { getData} from "../../services/actions";
 import {IAction, IStoreState} from "../../services/reducers";
@@ -21,7 +20,7 @@ function App() {
         (dispatch as ThunkDispatch<IStoreState, unknown, IAction>)(getData());
     }, [dispatch]);
 
-  const mainTableColumns: IColumnType<IResponseData>[] = [
+  const mainTableColumns: IColumnType[] = [
       {
         key: "name",
         title: "Название",
@@ -33,7 +32,7 @@ function App() {
       width: 200,
     }]
 
-    const characteristicsTableColumns: IColumnType<ITrainCharacteristics>[] = [
+    const characteristicsTableColumns: IColumnType[] = [
         {
             key: "engineAmperage",
             title: "Ток двигателя",

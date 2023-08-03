@@ -12,7 +12,7 @@ import {IAction, IStoreState} from "../../services/reducers";
 
 interface Props<T> {
     item: T;
-    column: IColumnType<T>;
+    column: IColumnType;
     tableType: string;
     itemIndex: number;
 }
@@ -75,12 +75,14 @@ export function TableCell<T>({ item, column, tableType, itemIndex }: Props<T>): 
             {tableType === "details" &&
                 <td className={styles.tableCell}
                     onClick={() => setEditable(true)}
+                    // Для предотвращения "залипания" input-ов при смене поезда
                     onMouseLeave={() => onEndEditField()}
                 >
                 {!isEditable && get(item, column.key)}
                 {isEditable &&
                     <input className={error ? styles.inputTextInvalid : styles.inputText}
                            type="text"
+                           // Так как onChange в react ведет себя как onInput, чтобы обрабатывать весь ввод использую onBlur
                            onBlur={(event) => onFinishedInput(item as IIndexedTrainCharacteristics, event)}
                            onChange ={(event) => onFormChange(item as IIndexedTrainCharacteristics, event)}
                            value={get(currentTrainCharacteristics, column.key)}

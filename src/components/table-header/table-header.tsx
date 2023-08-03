@@ -1,12 +1,12 @@
 import {IColumnType} from "../table/table";
 import styles from './table-header.module.css'
 
-interface Props<T> {
-    columns: IColumnType<T>[];
+interface Props {
+    columns: IColumnType[];
     tableType: string;
 }
 
-export function TableHeader<T>({ columns, tableType }: Props<T>): JSX.Element {
+export function TableHeader({ columns }: Props): JSX.Element {
     return (
         <tr>
             {columns.map((column, columnIndex) => (

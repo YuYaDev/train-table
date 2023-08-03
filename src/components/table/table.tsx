@@ -3,16 +3,15 @@ import { TableHeader } from '../table-header/table-header';
 import { TableRow } from '../table-row/table-row';
 
 // Шаблонный тип столбца таблицы
-export interface IColumnType<T> {
+export interface IColumnType {
     key: string;
     title: string;
     width?: number;
-    render?: (column: IColumnType<T>, item: T) => void;
 }
 
 interface Props<T> {
     data: T[];
-    columns: IColumnType<T>[];
+    columns: IColumnType[];
     tableType: string;
 }
 
