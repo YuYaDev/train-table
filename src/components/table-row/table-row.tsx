@@ -2,9 +2,9 @@ import styles from './table-row.module.css'
 
 import { IColumnType } from '../table/table';
 import {TableCell} from "../table-cell/table-cell";
-import { SET_CURRENT_TRAIN, SET_DETAILS_TABLE_VISIBLE} from "../../services/actions";
+import {SET_CURRENT_TRAIN, SET_CURRENT_TRAIN_NAME, SET_DETAILS_TABLE_VISIBLE} from "../../services/actions";
 import {useAppDispatch} from "../../index";
-import {IResponseData} from "../../utils/types";
+import {IIndexedData, IIndexedTrainCharacteristics, IResponseData} from "../../utils/types";
 
 
 interface Props<T> {
@@ -17,11 +17,18 @@ interface Props<T> {
 export function TableRow<T>({ data, columns, tableType }: Props<T>): JSX.Element {
 
     const dispatch = useAppDispatch();
-    function handle(train: IResponseData) {
+    function handle(train: IIndexedData) {
+        dispatch({
+            type: SET_CURRENT_TRAIN_NAME,
+            train_name: train.name
+        })
         dispatch({type: SET_DETAILS_TABLE_VISIBLE});
         dispatch({
             type: SET_CURRENT_TRAIN,
-            train: train.characteristics
+            current_train: train.characteristics.map((item) => ({
+                ...item,
+                global_idx: train.global_idx
+            }))
         })
     }
 
@@ -30,8 +37,7 @@ export function TableRow<T>({ data, columns, tableType }: Props<T>): JSX.Element
             {tableType === "main" &&
                 data.map((item, itemIndex) => (
                 <tr key={`table-body-${itemIndex}`} className={styles.tableRowItem}
-                    onClick={() => handle(item as IResponseData )}>
-
+                    onClick={() => handle(item as IIndexedData )}>
                     {columns.map((column, columnIndex) => (
                         <TableCell
                             key={`table-row-cell-${columnIndex}`}

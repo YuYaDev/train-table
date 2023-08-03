@@ -15,3 +15,10 @@ export interface IResponseData extends ITrainData {
     characteristics: ITrainCharacteristics[]
 }
 
+export interface IIndexedData extends IResponseData {
+    global_idx: number;
+}
+
+export interface IIndexedTrainCharacteristics extends ITrainCharacteristics {
+    global_idx: number;
+}

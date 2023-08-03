@@ -2,8 +2,9 @@
     display: flex;
     margin: auto;
     width: 100%;
-    padding: 50px;
+    padding: 100px;
     gap: 100px;
-    justify-content: center;
+    justify-content: flex-start;
     flex-wrap: wrap;
+    background-color: #f1f1f1;
 }

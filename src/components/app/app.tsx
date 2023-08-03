@@ -9,13 +9,14 @@ import {IAction, IStoreState} from "../../services/reducers";
 import {ThunkDispatch} from "redux-thunk";
 import styles from './app.module.css';
 import {get} from "lodash";
+import {TableContainer} from "../table-container/table-container";
 
 
 function App() {
 
   //const [trainData, setTrainData] = useState<ITrainData[]>([]);
 
-    const { dataRequest, dataRequestFailed, data, characteristicsVisible, currentTrainCharacteristics }  = useSelector((store : RootState) => store.trains)
+    const { dataRequest, dataRequestFailed, data, characteristicsVisible, currentTrainCharacteristics, currentTrainName }  = useSelector((store : RootState) => store.trains)
 
     const dispatch = useAppDispatch();
 
@@ -66,8 +67,8 @@ function App() {
         { dataRequestFailed && <p>Ошибка загрузки данных</p> }
         { dataRequest && <p>Загрузка данных...</p>}
       <div className={styles.tablesContainer}>
-          { !dataRequest && <Table data={data} columns={mainTableColumns} tableType="main" />}
-          {characteristicsVisible && <Table data={currentTrainCharacteristics} columns={characteristicsTableColumns} tableType="details"/>}
+          { !dataRequest && data && <TableContainer title={'Поезда'}><Table data={data} columns={mainTableColumns} tableType="main" /></TableContainer>}
+          {!dataRequest && characteristicsVisible && <TableContainer title={'Характеристики'} subtitle={currentTrainName}><Table data={currentTrainCharacteristics} columns={characteristicsTableColumns} tableType="details"/></TableContainer>}
       </div>
     </>
   );

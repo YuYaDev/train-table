@@ -8,8 +8,11 @@ export const GET_TRAIN_DATA = 'GET_TRAIN_DATA';
 export const GET_TRAIN_DATA_FAILED = "GET_TRAIN_DATA_FAILED";
 export const GET_TRAIN_DATA_SUCCESS = "GET_TRAIN_DATA_SUCCESS";
 export const SET_CURRENT_TRAIN = 'SET_CURRENT_TRAIN';
+export const SET_CURRENT_TRAIN_NAME = 'SET_CURRENT_TRAIN_NAME';
+export const SET_CURRENT_TRAIN_CHARACTERISTIC = 'SET_CURRENT_TRAIN_CHARACTERISTIC';
 export const SET_DETAILS_TABLE_VISIBLE = 'SET_DETAILS_TABLE_VISIBLE';
-export const SET_DETAILS_TABLE_INVISIBLE = 'SET_DETAILS_TABLE_INVISIBLE';
+export const START_EDIT_FORM_VALUE = 'START_EDIT_FORM_VALUE';
+export const END_EDIT_FORM_VALUE = 'END_EDIT_FORM_VALUE';
 
 const PATH = "https://gist.githubusercontent.com/orlov-oleg-developer/49f08290d1c59a6851e0a0581900e2a7/raw/e5daf87338f3c75165f8edf4c76cc7ec9c2b4aa9/gistfile1.json";
 
@@ -28,9 +31,14 @@ export function getData() : ThunkAction<void, IStoreState, unknown, IAction> {
         });
         requestData()
             .then((res) => {
+                const indexedData =  res.map((train, train_idx) => ({
+                    ...train,
+                    global_idx: train_idx
+                }))
+
                 dispatch({
                     type: GET_TRAIN_DATA_SUCCESS,
-                    data: res,
+                    data: indexedData,
                 });
             })
             .catch((err) => {

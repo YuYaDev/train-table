@@ -17,6 +17,7 @@ interface Props<T> {
 }
 
 export function Table<T>({ data, columns, tableType }: Props<T>): JSX.Element {
+
     return (
         <table className={styles.tableContainer} >
             <thead>
